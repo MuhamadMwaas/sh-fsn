@@ -90,6 +90,7 @@ class BalanceController extends Controller
     public function showBalanceHistoryd()
     {
         $user = Auth::user();
+        $userData = User::findOrFail(Auth::user()->id);
         $balance = $user->Balance;
         $dept = $user->Debt;
         // احصل على جميع عمليات الرصيد المرتبطة بالمستخدم مع البيانات التاريخية
@@ -119,6 +120,7 @@ class BalanceController extends Controller
 
         return view('balances.show', [
             'transactions' => $transactions,
+            'userData' => $userData,
             'debitBalance' => $debitBalance,
             'creditBalance' => $creditBalance,
             'balance' => $balance,
