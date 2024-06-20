@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable ;
+    use HasApiTokens, HasFactory, Notifiable;
     /**
      * The attributes that are mass assignable.
      *
@@ -96,10 +96,8 @@ class User extends Authenticatable
         return $this->hasMany(Transfer::class);
     }
 
-
-
-
-
-
-
+    public function transfer_History()
+    {
+        return $this->hasMany(Transfers_History::class, 'user_id');
+    }
 }

@@ -1,8 +1,11 @@
 <header id="header" class="header fixed-top  align-items-center" style="background-color: #1484c4;">
     <div class="container-fluid">
         <div class="row " style="margin-top: 7px;">
+
             <div class="col-4">
+
                 <nav class="header-nav ms-auto">
+
                     <ul class="d-flex align-items-center">
 
                         <li class="nav-item dropdown pe-3">
@@ -24,7 +27,8 @@
                                 @endauth
                             </a><!-- End Profile Image Icon -->
 
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                            <ul
+                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile text-center align-middle">
                                 <li class="dropdown-header">
                                     @auth
                                         <h6>{{ Auth::user()->name }}</h6>
@@ -33,6 +37,16 @@
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
+                                </li>
+                                <li class="text-center align-middle">
+                                    <a class="dropdown-item d-flex align-items-center text-center align-middle">
+                                        @can('is-Notadmin')
+                                            <span
+                                                class="badge text-bg-success me-5 fs-6 ">{{ Auth::user()->Balance }} ₺</span>
+                                            <span class="badge text-bg-danger fs-6 ">{{ Auth::user()->Debt }} ₺</span>
+
+                                        @endcan
+                                    </a>
                                 </li>
 
                                 <li>
@@ -138,7 +152,8 @@
                                                 @endphp
 
                                                 {{-- Display the user name --}}
-                                                <small>اسم المستخدم: {{ $user ? $user->name : 'غير متوفر' }}</small>
+                                                <small>اسم المستخدم:
+                                                    {{ $user ? $user->name : 'غير متوفر' }}</small>
                                                 <small>{{ $notification->created_at->diffForHumans() }}</small>
                                                 <br><a href="{{ route('admin.getAllNotifications') }}">
                                                     <span> تفاصيل الاشعار </span>

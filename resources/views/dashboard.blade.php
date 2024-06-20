@@ -179,7 +179,7 @@
                                                                 <i class="fa fa-turkish-lira"></i>
                                                             </div>
                                                             <div class="ps-3 ss">
-                                                                <h6>{{ $balanceHistory['creditBalance'] }}</h6>
+                                                                <h6>{{ Auth::user()->Balance }}</h6>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -198,7 +198,7 @@
                                                                 <i class="fa fa-turkish-lira"></i>
                                                             </div>
                                                             <div class="ps-3 ss">
-                                                                <h6>{{ $balanceHistory['debitBalance'] }}</h6>
+                                                                <h6>{{ Auth::user()->Debt }}</h6>
                                                             </div>
                                                         </div>
                                                     </div>

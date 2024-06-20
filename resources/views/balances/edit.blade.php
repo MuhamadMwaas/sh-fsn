@@ -13,7 +13,7 @@
                             <form method="POST" action="{{ route('balances.update', $balance->id) }}">
                                 @csrf
                                 @method('PUT')
-
+                                <input type="hidden" name="UserId" value="{{ $user->id }}">
                                 <!-- Field to update credit_balance -->
                                 <div class="form-group row">
                                     <label for="credit_balance"
@@ -21,24 +21,22 @@
                                     <div class="col-md-6">
                                         <?php
                                         use App\Models\Balance;
-
-// جلب أحدث سجل في جدول الرصيد Balance بناءً على تاريخ الإضافة
-$latestBalanceRecord = Balance::latest('created_at')->first();
-
-if ($latestBalanceRecord) {
-    // إذا تم العثور على سجل، استخراج قيمة الرصيد credit_balance
-    $latestCreditBalance = $latestBalanceRecord->credit_balance;
-} else {
-    // في حالة عدم وجود سجلات، يتم تعيين القيمة الافتراضية إلى صفر أو أي قيمة تراها مناسبة
-    $latestCreditBalance = 0;
-}
-
+                                        
+                                        // جلب أحدث سجل في جدول الرصيد Balance بناءً على تاريخ الإضافة
+                                        $latestBalanceRecord = Balance::latest('created_at')->first();
+                                        
+                                        if ($latestBalanceRecord) {
+                                            // إذا تم العثور على سجل، استخراج قيمة الرصيد credit_balance
+                                            $latestCreditBalance = $latestBalanceRecord->credit_balance;
+                                        } else {
+                                            // في حالة عدم وجود سجلات، يتم تعيين القيمة الافتراضية إلى صفر أو أي قيمة تراها مناسبة
+                                            $latestCreditBalance = 0;
+                                        }
+                                        
                                         ?>
                                         <input id="credit_balance" type="number"
                                             class="form-control @error('credit_balance') is-invalid @enderror"
-                                            name="credit_balance"
-                                            value="{{ $latestCreditBalance }}"
-                                            required autofocus>
+                                            name="credit_balance" value="{{ $user->Balance }}" required autofocus>
 
                                         @error('credit_balance')
                                             <span class="invalid-feedback" role="alert">
@@ -55,8 +53,7 @@ if ($latestBalanceRecord) {
                                     <div class="col-md-6">
                                         <input id="debit_balance" type="number"
                                             class="form-control @error('debit_balance') is-invalid @enderror"
-                                            name="debit_balance" value="{{ -old('debit_balance', $balance->debit_balance) }}"
-                                            readonly>
+                                            name="debit_balance" value="{{ old('debit_balance', $user->Debt) }}" readonly>
                                         @error('debit_balance')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

@@ -5,33 +5,34 @@ namespace App\Http\Controllers;
 use App\Models\Simcard;
 use App\Models\Soldline;
 use App\Models\User;
+use App\Triats\Transfer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class SoldLineController extends Controller
 {
+    
     public function index()
     {
-        if(Auth::user()->role_id == 1){
+        if (Auth::user()->role_id == 1) {
             $soldLines = Soldline::all();
             return view('sold_lines.index', compact('soldLines'));
-        }elseif(Auth::user()->role_id == 2){
-             if (Auth::check()) {
-            // المستخدم مسجل الدخول
-            $user = Auth::user();
+        } elseif (Auth::user()->role_id == 2) {
+            if (Auth::check()) {
+                // المستخدم مسجل الدخول
+                $user = Auth::user();
 
-            $soldLines = Soldline::with(['simcard.user']) // تضمين علاقة المستخدم من جدول simcard
-                ->whereHas('simcard', function ($query) use ($user) {
-                    $query->where('user_id', $user->id);
-                })
-                ->get();
-            // قم بتحويل المستخدم إلى صفحة HTML لعرض الخطوط المباعة
-            return view('sold_lines.index', compact('soldLines'));
-        } else {
-            return redirect()->route('login');
-        }
-
+                $soldLines = Soldline::with(['simcard.user']) // تضمين علاقة المستخدم من جدول simcard
+                    ->whereHas('simcard', function ($query) use ($user) {
+                        $query->where('user_id', $user->id);
+                    })
+                    ->get();
+                // قم بتحويل المستخدم إلى صفحة HTML لعرض الخطوط المباعة
+                return view('sold_lines.index', compact('soldLines'));
+            } else {
+                return redirect()->route('login');
+            }
         } else {
             // المستخدم غير مسجل الدخول
             return redirect()->route('login')->with('error', 'يرجى تسجيل الدخول');
@@ -107,25 +108,25 @@ class SoldLineController extends Controller
 
     public function store(Request $request, $serialNumber)
     {
-    // البحث عن بيانات بطاقة الـ SIM باستخدام رقم التسلسل
-    $simCard = Simcard::where('serial_number', $serialNumber)->firstOrFail();
+        // البحث عن بيانات بطاقة الـ SIM باستخدام رقم التسلسل
+        $simCard = Simcard::where('serial_number', $serialNumber)->firstOrFail();
 
-    $validator = Validator::make($request->all(), [
-        'first_image' => 'required|image|mimes:jpeg,png,jpg,gif',
-        'second_image' => 'required|image|mimes:jpeg,png,jpg,gif',
-    ], [
-        'first_image.required' => 'يرجى تحميل الصورة الأولى',
-        'first_image.image' => 'يجب أن تكون الصورة الأولى ملف صورة',
-        'first_image.mimes' => 'تنسيق الصورة الأولى يجب أن يكون jpeg، png، jpg، أو gif',
-        'second_image.required' => 'يرجى تحميل الصورة الثانية',
-        'second_image.image' => 'يجب أن تكون الصورة الثانية ملف صورة',
-        'second_image.mimes' => 'تنسيق الصورة الثانية يجب أن يكون jpeg، png، jpg، أو gif',
-    ]);
+        $validator = Validator::make($request->all(), [
+            'first_image' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'second_image' => 'required|image|mimes:jpeg,png,jpg,gif',
+        ], [
+            'first_image.required' => 'يرجى تحميل الصورة الأولى',
+            'first_image.image' => 'يجب أن تكون الصورة الأولى ملف صورة',
+            'first_image.mimes' => 'تنسيق الصورة الأولى يجب أن يكون jpeg، png، jpg، أو gif',
+            'second_image.required' => 'يرجى تحميل الصورة الثانية',
+            'second_image.image' => 'يجب أن تكون الصورة الثانية ملف صورة',
+            'second_image.mimes' => 'تنسيق الصورة الثانية يجب أن يكون jpeg، png، jpg، أو gif',
+        ]);
 
-    // التحقق من فشل الفلديشن
-    if ($validator->fails()) {
-        return redirect()->back()->withErrors($validator)->withInput();
-    }
+        // التحقق من فشل الفلديشن
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         // التحقق من وجود الصور وأنها غير فارغة
         if ($request->hasFile('first_image') && $request->hasFile('second_image')) {
             $first_image = $request->file('first_image');

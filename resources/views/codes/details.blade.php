@@ -31,7 +31,7 @@
                                     <p class="card-text">{{ $category->price }}<span><i
                                                 class="fa fa-turkish-lira"></i></span></p>
                                     @if (Auth::user() && Auth::user()->role_id == 2)
-                                        @if ($category->price > $creditBalanceUser)
+                                        @if ($category->price > Auth::user()->Balance)
                                             <h5 style="color: red;">ليس لديك ما يكفي من الرصيد لشراء هذا الكود</h5>
                                         @elseif($code->isRecorded())
                                             <h5 style="color: red;">حاول ثانيتا هناك ضغط على شراء هذه الفئة</h>

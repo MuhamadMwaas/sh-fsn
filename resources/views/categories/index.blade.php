@@ -74,9 +74,10 @@
                                             <td scope="col" class="text-center align-middle">{{ $category->available_codes }}
                                             </td>
                                         @endcan
-                                        <td>
 
-                                            @can('is-admin')
+
+                                        @can('is-admin')
+                                            <td>
                                                 <div class="row">
                                                     <div class="col-2">
                                                         <form id="archiveForm{{ $category->id }}"
@@ -97,8 +98,9 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                            @endcan
-                                        </td>
+                                            </td>
+                                        @endcan
+
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -123,11 +125,8 @@
 </script>
 @push('endjs')
     <script>
-  
-
         const dataTable = new simpleDatatables.DataTable("#catTable", {
             perPageSelect: [5, 10, 15, ["All", -1]],
         });
-     
     </script>
 @endpush

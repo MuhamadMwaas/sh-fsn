@@ -27,6 +27,8 @@
                                 <th scope="col">{{ __('المندوب') }}</th>
                                 <th scope="col">{{ __('الايميل') }}</th>
                                 <th scope="col">{{ __('الرصيد') }}</th>
+                                <th scope="col">الرصيد الحالي</th>
+                                <th scope="col">الدين الحالي</th>
                                 <th scope="col">{{ __('تعديل الرصيد') }}</th>
                                 <th scope="col">{{ __('حالة الحساب') }}</th>
                                 <th scope="col">{{ __('ادارة') }}</th>
@@ -39,14 +41,27 @@
                                     <tr>
                                         <th scope="row"><a href="#">{{ $user->id }}</a></th>
                                         <td>{{ $user->name }}</td>
-                                        <td><a href="{{ route('users.showEditPasswordFormAdmin', $user->id) }}" class="text-primary">{{ $user->email }}</a></td>
+                                        <td><a href="{{ route('users.showEditPasswordFormAdmin', $user->id) }}"
+                                                class="text-primary">{{ $user->email }}</a></td>
                                         <td>
                                             @if ($user->balance)
-                                                <a href="{{ route('balances.show', $user->id) }}"> <i class="fa fa-turkish-lira"></i>
+                                                <a href="{{ route('balances.show', $user->id) }}"> <i
+                                                        class="fa fa-turkish-lira"></i>
                                                     عرض الرصيد</a>
                                             @else
                                                 {{ __('لا يوجد رصيد لعرضه') }}
                                             @endif
+                                        </td>
+                                        <td>
+                                            {{ $user->Balance }}
+                                        </td>
+                                        <td>
+                                            @if ($user->Debt > 0)
+                                                <span class="text-danger">{{ $user->Debt }}</span>
+                                            @else
+                                                <span class="text-success">{{ $user->Debt }}</span>
+                                            @endif
+
                                         </td>
                                         <td>
                                             @if ($user->balance)

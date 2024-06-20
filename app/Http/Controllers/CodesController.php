@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\TransferType;
 use App\Http\Requests\ImportCodesRequest;
 use App\Models\Category;
 use App\Models\Code;
 use App\Models\Coderecord;
+use App\Models\User;
+use App\Triats\Charge;
+use App\Triats\Transfer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Psy\Readline\Hoa\Console;
 use Illuminate\Support\Facades\Gate;
 
 
 class CodesController extends Controller
 {
+    use Charge;
+    use Transfer;
     public function index()
     {
         // عرض كل الأكواد
@@ -60,11 +68,15 @@ class CodesController extends Controller
         $code = Code::findOrFail($codeId);
 
         // احصل على المستخدم الحالي
-        $user = auth()->user();
+        $user = User::findOrFail(auth()->user()->id);
+        $userBalance = $user->Balance;
+        $userDebt = $user->Debt;
+
         $totalCreditBalance = $user->balance->sum('credit_balance');
 
-        // التحقق من أن رصيد المستخدم كافٍ لشراء الكود
-        if ($totalCreditBalance >= $code->category->price) {
+        // التحقق من أن رصيد المستخدم كافٍ لشراء الكود  $totalCreditBalance >= $code->category->price
+        if ($user->Balance >= $code->category->price) {
+
             try {
                 // إضافة الكود إلى سجل الأكواد
                 CodeRecord::create([
@@ -78,6 +90,22 @@ class CodesController extends Controller
 
                 // تحديث حالة الشراء في جدول الأكواد
                 $code->update(['purchased' => true]);
+                // ================================ ***************************** =============================================
+
+                DB::beginTransaction();
+
+                try {
+                    $this->chargeUser($user, TransferType::buyCode, $code->category->price);
+                    $this->createTransfer($user->id, $code->category->price, TransferType::buyCode, $userBalance, $userDebt, Auth::user()->id);
+                    DB::commit();
+                    // all good
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    dd($e);
+                    // something went wrong
+                }
+                // ================================ ***************************** =============================================
+
 
                 // عرض رسالة النجاح والرابط
                 return redirect()->back()->with('success', 'تم شراء الكود بنجاح.')->with('code_purchased', true);

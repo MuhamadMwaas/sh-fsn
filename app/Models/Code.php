@@ -29,6 +29,12 @@ class Code extends Model
             return $this->codeRecords->first()->user;
         }
     }
+    public function purchaseDate()
+    {
+        if ($this->codeRecords->first()) {
+            return $this->codeRecords->first()->created_at;
+        }
+    }
     public function isRecorded()
     {
         // قم بالتحقق من وجود الكود في جدول سجل الأكواد

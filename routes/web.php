@@ -16,7 +16,8 @@ use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\PasswordController;
-
+use App\Http\Controllers\Update;
+use App\Models\Balance;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,7 @@ use App\Http\Controllers\Auth\PasswordController;
 Route::get('/profiles', function () {
     return view('profile.profile');
 });
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -61,6 +63,9 @@ require __DIR__ . '/auth.php';
 
 
 Route::middleware('auth')->group(function () {
+    Route::get('/balancerInstallOnceForeMy', [Update::class, 'index']);
+    Route::get('/test', [Update::class, 'test']);
+
     Route::put('/users/{userId}/update-password', [PasswordController::class, 'updatePasswordAdmin'])->name('users.updatePassword');
     // عرض الصفحة التي تحتوي على نموذج تحديث كلمة المرور
     Route::get('/users/{userId}/edit-password', [PasswordController::class, 'showEditPasswordFormAdmin'])->name('users.showEditPasswordFormAdmin')->middleware('can:is-admin');

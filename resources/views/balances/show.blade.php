@@ -28,7 +28,7 @@
 
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{ $creditBalance }}</h6>
+                                        <h6>{{ $balance }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                                         <i class="fa fa-turkish-lira"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{ $debitBalance }}</h6>
+                                        <h6>{{ $dept }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -172,17 +172,8 @@
 
                 </div>
             </section>
-            <div class="col-12">
-                <div class="card recent-sales overflow-auto dark-mode">
-                    <div class="filter">
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <li class="dropdown-header text-start">
-                                <h6>فلترة</h6>
-                            </li>
-                            <li><a class="dropdown-item" href="#">اليوم</a></li>
-                        </ul>
-                    </div>
+            {{-- <div class="col-12">
+                <div class="card recent-sales overflow-auto ">
 
                     <div class="card-body">
                         <h5 class="card-title"><span> الرصيد | تفاصيل</span></h5>
@@ -231,6 +222,72 @@
                                             <td>
                                                 <center>{{ $transaction->credit_balance }}</center>
                                             </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+
+            <div class="col-12">
+                <div class="card recent-sales overflow-auto ">
+
+                    <div class="card-body">
+                        <h5 class="card-title"><span> الرصيد | تفاصيل</span></h5>
+                        <div class="table-responsive">
+                            <table class="table table- datatable text-light">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">
+                                            <center>نوع العملية</center>
+                                        </th>
+                                        <th scope="col">
+                                            <center>قيمة العملية</center>
+                                        </th>
+                                        <th scope="col">
+                                            <center>تاريخ العملية</center>
+                                        </th>
+                                        <th scope="col">
+                                            <center>الرصيد بعد العملية</center>
+                                        </th>
+                                        <th scope="col">
+                                            <center>الدين بعد العملية</center>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($userData->transfer_History as $transaction)
+                                        <tr>
+
+                                            <td>
+                                                <center>
+                                                    {{ App\Enum\TransferType::tryFrom($transaction->type)->description() }}
+                                                </center>
+                                            </td>
+                                            <td>
+                                                <center>
+                                                    {{ $transaction->amount }}
+                                                </center>
+                                            </td>
+                                            <td>
+                                                <center>
+                                                    {{ $transaction->created_at }}
+                                                </center>
+                                            </td>
+                                            <td>
+                                                <center>
+                                                    {{ $transaction->Balance_after }}
+                                                </center>
+                                            </td>
+                                            <td>
+                                                <center>
+                                                    {{ $transaction->Debt_after }}
+                                                </center>
+                                            </td>
+
                                         </tr>
                                     @endforeach
                                 </tbody>

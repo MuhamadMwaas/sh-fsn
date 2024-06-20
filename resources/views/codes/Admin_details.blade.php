@@ -103,6 +103,8 @@
                                 <th> الكود </th>
                                 <th class="text-center align-middle" data-type="date" data-format="YYYY/DD/MM">تاريخ
                                     الاظافة</th>
+                                <th class="text-center align-middle" data-type="date" data-format="YYYY/DD/MM">تاريخ
+                                    الشراء</th>
                                 <th>حالة الكود</th>
                                 <th>المشتري</th>
                                 <th>الاحداث </th>
@@ -115,6 +117,14 @@
                                     <td>{{ $code->code }}</td>
                                     <td class="text-center align-middle">
                                         {{ date_format($code->created_at, 'H:i / Y-m-d') }}</td>
+
+                                    <td class="text-center align-middle">
+                                        @if ($code->purchaseDate())
+                                            {{ date_format($code->purchaseDate(), 'H:i / Y-m-d') }}
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($code->client())
                                             مباع
