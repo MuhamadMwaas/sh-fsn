@@ -21,7 +21,7 @@
                 {{-- عرض أول كود غير مسجل --}}
 
                 @foreach ($shuffledCodes as $index => $code)
-                    @if (!$code->isRecorded() && !$code->purchased)
+                    @if (true)
                         <div class="col-lg-4 mb-4">
                             <div class="card">
                                 <div class="card-body">

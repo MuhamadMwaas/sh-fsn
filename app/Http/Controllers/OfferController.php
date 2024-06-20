@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Offer;
@@ -39,38 +40,38 @@ class OfferController extends Controller
         }
     }
 
-   
 
-public function store(Request $request)
-{
-    $request->validate([
-        'title' => 'required',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'description' => 'required',
-        'expiry_date' => 'required|date',
-    ]);
 
-    // التحقق مما إذا كان التاريخ المدخل يساوي أو يسبق التاريخ الحالي
-    if (Carbon::now()->gte(Carbon::parse($request->expiry_date))) {
-        return redirect()->back()->withInput()->with('error', 'يجب أن يكون تاريخ انتهاء العرض أكبر من التاريخ الحالي.');
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'description' => 'required',
+            'expiry_date' => 'required|date',
+        ]);
+
+        // التحقق مما إذا كان التاريخ المدخل يساوي أو يسبق التاريخ الحالي
+        if (Carbon::now()->gte(Carbon::parse($request->expiry_date))) {
+            return redirect()->back()->withInput()->with('error', 'يجب أن يكون تاريخ انتهاء العرض أكبر من التاريخ الحالي.');
+        }
+
+        if ($request->hasFile('image')) {
+            $imageName = Str::random(20) . '.' . $request->image->getClientOriginalExtension();
+            $imagePath = public_path('images');
+            $imagePath = str_replace('public', 'public_html', $imagePath);
+            $request->image->move($imagePath, $imageName);
+        }
+
+        Offer::create([
+            'title' => $request->input('title'),
+            'image' => $imageName ?? null,
+            'description' => $request->input('description'),
+            'expiry_date' => $request->input('expiry_date'),
+        ]);
+
+        return redirect()->route('offers.index')->with('success', 'تمت إضافة العرض بنجاح.');
     }
-
-    if ($request->hasFile('image')) {
-        $imageName = Str::random(20) . '.' . $request->image->getClientOriginalExtension();
-        $imagePath = public_path('images');
-        $imagePath = str_replace('public', 'public_html', $imagePath);
-        $request->image->move($imagePath, $imageName);
-    }
-
-    Offer::create([
-        'title' => $request->input('title'),
-        'image' => $imageName ?? null,
-        'description' => $request->input('description'),
-        'expiry_date' => $request->input('expiry_date'),
-    ]);
-
-    return redirect()->route('offers.index')->with('success', 'تمت إضافة العرض بنجاح.');
-}
 
     public function show($id)
     {
@@ -116,17 +117,17 @@ public function store(Request $request)
 
 
     private function uploadImage(Request $request)
-{
-    if ($request->hasFile('image')) {
-        $imageName = Str::random(20) . '.' . $request->image->getClientOriginalExtension();
-        $imagePath = public_path('images');
-        $request->image->move($imagePath, $imageName);
+    {
+        if ($request->hasFile('image')) {
+            $imageName = Str::random(20) . '.' . $request->image->getClientOriginalExtension();
+            $imagePath = public_path('images');
+            $request->image->move($imagePath, $imageName);
 
-        return $imageName;
+            return $imageName;
+        }
+
+        return null;
     }
-
-    return null;
-}
 
 
 
