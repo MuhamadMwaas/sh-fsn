@@ -5,6 +5,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activationsim;
+use App\Models\Category;
 use App\Models\Coderecord;
 use App\Models\Internationalsim;
 use App\Models\Soldline;
@@ -193,8 +194,8 @@ class AdminController extends Controller
                 $readNotifications = $user->readNotifications;
             }
         }
-
-        return view('dashboard', compact('unreadNotifications', 'readNotifications'));
+        $categories = Category::where('archived', 0)->get();
+        return view('dashboard', compact('unreadNotifications', 'readNotifications', 'categories'));
     }
     // في كونترولر NotificationsController أو حسب اسم الكونترولر الخاص بك
     public function markAsRead($notificationId)

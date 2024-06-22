@@ -27,12 +27,24 @@
                         <table class="table table-borderless datatable">
                             <thead>
                                 <tr>
-                                    <th scope="col"><center> # </center></th>
-                                    <th scope="col"><center>  الكود </center></th>
-                                    <th scope="col"><center>  الفئة</center> </th>
-                                    <th scope="col"><center></center>   السعر </th>
-                                    <th scope="col"><center> تا ريخ الشراء</center></th>
-                                    <th scope="col"><center> ا لمندوب</center></th>
+                                    <th scope="col">
+                                        <center> # </center>
+                                    </th>
+                                    <th scope="col">
+                                        <center> الكود </center>
+                                    </th>
+                                    <th scope="col">
+                                        <center> الفئة</center>
+                                    </th>
+                                    <th scope="col">
+                                        <center></center> السعر
+                                    </th>
+                                    <th scope="col" data-type="date" data-format="MMM DD, YYYY">
+                                        <center> تا ريخ الشراء</center>
+                                    </th>
+                                    <th scope="col">
+                                        <center> ا لمندوب</center>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,14 +55,17 @@
 
                                 @foreach ($sortedCodes as $index => $codeRecord)
                                     @if ($codeRecord->code && $codeRecord->code->category && $codeRecord->user)
-                                    <tr>
-                                        <th scope="row">{{ $index + 1 }}</th>
-                                        <td><a href="#" class="text-primary clipboard-btn" data-clipboard-text="{{ $codeRecord->code->code }}">{{ $codeRecord->code->code }}</a></td>
-                                        <td>{{ $codeRecord->code->category->type }}</td>
-                                        <td>{{ $codeRecord->code->category->price }} <i class="fa fa-turkish-lira"></i></td>
-                                        <td>{{ $codeRecord->created_at }}</td>
-                                        <td><a href="{{ route('users.index')}}">{{ $codeRecord->user->name }}</a></td>
-                                    </tr>
+                                        <tr>
+                                            <th scope="row">{{ $index + 1 }}</th>
+                                            <td><a href="#" class="text-primary clipboard-btn"
+                                                    data-clipboard-text="{{ $codeRecord->code->code }}">{{ $codeRecord->code->code }}</a>
+                                            </td>
+                                            <td>{{ $codeRecord->code->category->type }}</td>
+                                            <td>{{ $codeRecord->code->category->price }} <i class="fa fa-turkish-lira"></i>
+                                            </td>
+                                            <td>{{ $codeRecord->created_at }}</td>
+                                            <td><a href="{{ route('users.index') }}">{{ $codeRecord->user->name }}</a></td>
+                                        </tr>
                                     @endif
                                 @endforeach
                             </tbody>
@@ -64,17 +79,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var clipboard = new ClipboardJS('.clipboard-btn');
+        document.addEventListener('DOMContentLoaded', function() {
+            var clipboard = new ClipboardJS('.clipboard-btn');
 
-        clipboard.on('success', function (e) {
-            alert("تم نسخ الكود: " + e.text);
-            e.clearSelection();
-        });
+            clipboard.on('success', function(e) {
+                alert("تم نسخ الكود: " + e.text);
+                e.clearSelection();
+            });
 
-        clipboard.on('error', function (e) {
-            console.error('تعذر النسخ:', e);
+            clipboard.on('error', function(e) {
+                console.error('تعذر النسخ:', e);
+            });
         });
-    });
-</script>
+    </script>
 @endsection

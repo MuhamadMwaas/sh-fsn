@@ -93,7 +93,7 @@ class InternationasimController extends Controller
 
                     // تحديد المسار للحفظ
                     $firstImagePath = public_path('images');
-                    $firstImagePath = str_replace('public', 'public_html', $firstImagePath);
+                    // $firstImagePath = str_replace('public', 'public_html', $firstImagePath);
 
                     // حفظ الصورة
                     $request->file('first_image')->move($firstImagePath, $firstImageName);
@@ -108,7 +108,7 @@ class InternationasimController extends Controller
 
                     // تحديد المسار للحفظ
                     $secondImagePath = public_path('images');
-                    $secondImagePath = str_replace('public', 'public_html', $secondImagePath);
+                    // $secondImagePath = str_replace('public', 'public_html', $secondImagePath);
                     // حفظ الصورة
                     $request->file('second_image')->move($secondImagePath, $secondImageName);
 

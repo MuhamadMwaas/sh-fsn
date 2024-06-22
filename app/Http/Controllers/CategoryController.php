@@ -70,7 +70,7 @@ class CategoryController extends Controller
 
         // تحديد المسار للحفظ
         $imagePath = public_path('images');
-        $imagePath = str_replace('public', 'public_html', $imagePath);
+        // $imagePath = str_replace('public', 'public_html', $imagePath);
 
 
         // حفظ الصورة
@@ -122,7 +122,7 @@ class CategoryController extends Controller
 
             $imageName = time() . '.' . $request->image->getClientOriginalExtension();
             $imagePath = public_path('images');
-            $imagePath = str_replace('public', 'public_html', $imagePath);
+            // $imagePath = str_replace('public', 'public_html', $imagePath);
             $request->image->move($imagePath, $imageName);
 
             // Update the image field in the database

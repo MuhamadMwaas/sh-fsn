@@ -34,6 +34,13 @@
     {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
     <!-- Template Main CSS File -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <style>
+        .disabled-link {
+            pointer-events: none;
+            color: gray;
+            text-decoration: none;
+        }
+    </style>
 
     <!-- Vendor CSS Files -->
     <!-- Template Main CSS File -->
@@ -97,9 +104,7 @@
 
 
     <script src="{{ asset('js/main.js') }}"></script>
-    <script>
-      
-    </script>
+    <script></script>
 </body>
 
 </html>

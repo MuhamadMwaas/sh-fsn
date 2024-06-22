@@ -4,28 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\Code;
 use App\Models\Coderecord;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CodeManagementController extends Controller
 {
     public function index()
-{
-    // عرض جميع الأكواد التي باعها جميع المستخدمين
-    $codes = Coderecord::getAllCodes();
-    return view('code_management.user_sold_codes', compact('codes'));
-}
+    {
+        // عرض جميع الأكواد التي باعها جميع المستخدمين
+        $codes = Coderecord::getAllCodes();
+        return view('code_management.user_sold_codes', compact('codes'));
+    }
 
-public function userSoldCodes()
-{
-    // احصل على المستخدم الحالي
-    $user = Auth::user();
+    public function userSoldCodes()
+    {
+        // احصل على المستخدم الحالي
+        $user = User::findOrFail(Auth::user()->id);
 
-    // جلب جميع السجلات من جدول Coderecord التابعة للمستخدم الحالي
-    $coderecords = $user->coderecords()->with('code.category')->get();
+        // جلب جميع السجلات من جدول Coderecord التابعة للمستخدم الحالي
+        $coderecords = $user->coderecords()->with('code.category')->get();
 
-    return view('code_management.index', compact('coderecords'));
-}
+        return view('code_management.index', compact('coderecords'));
+    }
 
 
 

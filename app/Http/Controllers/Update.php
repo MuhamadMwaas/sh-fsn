@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enum\TransferType;
 use App\Models\Balance;
+use App\Models\Code;
 use App\Models\User;
 use App\Triats\BalanceResolve;
 use App\Triats\Charge;
@@ -14,6 +15,10 @@ class Update extends Controller
 {
     use Transfer;
     use Charge;
+    // =========================================== test function ===========================================
+    /**
+     * من اجل نقل الرصيد من الجدول القديم لجدول المستخدم
+     */
     public function index()
     {
 
@@ -54,9 +59,19 @@ class Update extends Controller
         }
     }
 
+    // =========================================== test function ===========================================
     public function test()
     {
         $user = User::find(24);
         dd($this->chargeUser($user, TransferType::DebtRepayment, 60));
+    }
+
+    public function purchasedCodes()
+    {
+        $codes = Code::whereHas('codeRecords')->get();
+        foreach ($codes as $code) {
+            $code->purchased = 1;
+            $code->save();
+        }
     }
 }

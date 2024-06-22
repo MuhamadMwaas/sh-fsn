@@ -71,7 +71,10 @@
 
 
                                         @can('is-admin')
-                                            <td scope="col" class="text-center align-middle">{{ $category->available_codes }}
+                                            <td scope="col" class="text-center align-middle ">
+                                                <center>
+                                                    {{ $category->available_codes }}
+                                                </center>
                                             </td>
                                         @endcan
 
@@ -124,9 +127,9 @@
     }
 </script>
 @push('endjs')
-    <script>
+    {{-- <script>
         const dataTable = new simpleDatatables.DataTable("#catTable", {
             perPageSelect: [5, 10, 15, ["All", -1]],
         });
-    </script>
+    </script> --}}
 @endpush

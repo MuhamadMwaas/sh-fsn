@@ -271,7 +271,7 @@
     function submitForm(id, key, button) {
         Swal.fire({
             title: `هل تريد حقاً حذف الكود  ${key}؟`,
-            html: `<br> <strong><span class="text-danger">لا</span> يمكن التراجع عن هذا الإجراء! وفي حال تم شراء الكود سيختفي من عند العميل</strong>`,
+            html: `<br> <strong><span class="text-danger">لا</span> يمكن التراجع عن هذا الإجراء! وفي حال تم شراء الكود سيختفي لدى العميل</strong>`,
             icon: 'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

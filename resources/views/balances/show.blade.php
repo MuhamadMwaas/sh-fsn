@@ -263,7 +263,8 @@
                                         <tr>
 
                                             <td>
-                                                <center>
+                                                <center
+                                                    class="{{ App\Enum\TransferType::tryFrom($transaction->type)->class() }}">
                                                     {{ App\Enum\TransferType::tryFrom($transaction->type)->description() }}
                                                 </center>
                                             </td>

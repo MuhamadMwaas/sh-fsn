@@ -191,11 +191,10 @@ class BalanceController extends Controller
             $this->chargeUser($user, $type, $request->amount);
             $this->createTransfer($user->id, $request->amount, $type, $userBalance, $userDebt, Auth::user()->id);
             DB::commit();
-            // all good
         } catch (\Exception $e) {
             DB::rollback();
-            // something went wrong
         }
+        
         // Calculate total balance
         $totalBalance = $balance->credit_balance - $balance->debit_balance;
 

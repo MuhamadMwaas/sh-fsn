@@ -40,11 +40,11 @@
                                                 <a href="{{ route('addtocoderecord.create', $code->id) }}"
                                                     class="btn btn-primary purchase-btn" id="purchase-btn"
                                                     onclick="handlePurchase(event)">شراء الكود</a>
-                                            @break
+                                                @break
                                     @endif
                                 @endif
 
-                                @can('is-admin')
+                                {{-- @can('is-admin')
                                     <!-- زر الحذف -->
                                     <form action="{{ route('codes.destroy', $code->id) }}" method="POST"
                                         style="display:inline;">
@@ -52,7 +52,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">حذف الكود</button>
                                     </form>
-                                @endcan
+                                @endcan --}}
                             </div>
                         </div>
                         {{-- انهاء الحلقة بمجرد عرض كود واحد --}}
@@ -63,7 +63,7 @@
         @endforeach
     </div>
     {{-- إذا لم يكن هناك أكواد --}}
-    @if (count($shuffledCodes) === 0)
+    @if ($codes->count() == 0)
         <div class="col-lg-12">
             <h5 style="color: red">لا يوجد أكواد من فئة {{ $category->type }} حاليًا، ستتوفر قريبًا بإذن الله.</h5>
         </div>
@@ -116,6 +116,9 @@
     var isPurchaseClicked = false;
 
     function handlePurchase(event) {
+
+        document.getElementById('purchase-btn').classList.add('disabled-link');
+
         if (!isPurchaseClicked) {
             isPurchaseClicked = true;
 

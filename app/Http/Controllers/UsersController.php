@@ -15,7 +15,7 @@ class UsersController extends Controller
     {
         if (Gate::allows('is-admin')) {
             $users = User::all();
-            
+
             return view('Delegates.index', compact('users'));
         } else {
             return abort(403, 'Unauthorized action.');
@@ -23,6 +23,7 @@ class UsersController extends Controller
     }
     public function showAllUsersd()
     {
+        dd('dd');
         if (Gate::allows('is-admin')) {
             $users = User::all();
             return view('Delegates.index', compact('users'));
@@ -44,7 +45,7 @@ class UsersController extends Controller
 
 
         // إعداد رسالة النجاح
-        $message = $newStatus ?  'تم إعادة تفعيل حساب المستخدم بنجاح.':'تم إيقاف تفعيل حساب المستخدم بنجاح.' ;
+        $message = $newStatus ?  'تم إعادة تفعيل حساب المستخدم بنجاح.' : 'تم إيقاف تفعيل حساب المستخدم بنجاح.';
 
         // إعادة توجيه مع رسالة النجاح
         return redirect()->route('users.index')->with('success', $message);

@@ -98,6 +98,6 @@ class User extends Authenticatable
 
     public function transfer_History()
     {
-        return $this->hasMany(Transfers_History::class, 'user_id');
+        return $this->hasMany(Transfers_History::class, 'user_id')->orderBy('created_at', 'desc');
     }
 }

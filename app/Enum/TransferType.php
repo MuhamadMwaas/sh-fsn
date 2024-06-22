@@ -22,4 +22,16 @@ enum TransferType: int
             TransferType::ChangeBalance => 'تعديل رصيد من قبل المدير',
         };
     }
+
+    public function class(): string
+    {
+        return match ($this) {
+            TransferType::PaidCharge => 'badge text-bg-success',
+            TransferType::DebtCharge => 'badge rounded-pill text-bg-danger',
+            TransferType::DebtRepayment => 'badge rounded-pill text-bg-info',
+            TransferType::buyCode => 'badge rounded-pill text-bg-primary',
+            TransferType::buyInternationalsim => 'badge rounded-pill text-bg-light',
+            TransferType::ChangeBalance => 'badge rounded-pill text-bg-warning',
+        };
+    }
 }

@@ -16,6 +16,7 @@ use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Report;
 use App\Http\Controllers\Update;
 use App\Models\Balance;
 
@@ -45,12 +46,7 @@ Route::get('/Contact', function () {
 Route::get('/payment', function () {
     return view('payment');
 });
-Route::get('/dashboard', function () {
-    return view('dashboard', [
-        'balanceHistory' => (new BalanceController())->showBalanceHistoryd(),
 
-    ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -65,12 +61,12 @@ require __DIR__ . '/auth.php';
 Route::middleware('auth')->group(function () {
     Route::get('/balancerInstallOnceForeMy', [Update::class, 'index']);
     Route::get('/test', [Update::class, 'test']);
+    Route::get('/CodespurchasedAll', [Update::class, 'purchasedCodes']);
 
     Route::put('/users/{userId}/update-password', [PasswordController::class, 'updatePasswordAdmin'])->name('users.updatePassword');
     // عرض الصفحة التي تحتوي على نموذج تحديث كلمة المرور
     Route::get('/users/{userId}/edit-password', [PasswordController::class, 'showEditPasswordFormAdmin'])->name('users.showEditPasswordFormAdmin')->middleware('can:is-admin');
     Route::get('/users', [UsersController::class, 'showAllUsers'])->name('users.index');
-    Route::get('/dashboard', [UsersController::class, 'showAllUsersd'])->name('users.index');
     Route::post('/users/{userId}/deactivate', [UsersController::class, 'toggleStatus'])->name('users.toggleStatus');
 
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
@@ -214,6 +210,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/reject-notification/{notificationId}', [AdminController::class, 'rejectNotification'])
         ->name('admin.rejectNotification');
     Route::get('/user/notifications', [AdminController::class, 'getUserNotifications'])->name('user.notifications');
+    // صفحة لوحة التحكم
     Route::get('/dashboard', [AdminController::class, 'getNotifications'])->name('layouts.navigation');
     Route::post('/mark-as-read/{notificationId}', [AdminController::class, 'markAsRead'])->name('admin.markAsRead');
 
@@ -222,10 +219,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/transfers/create', [TransferController::class, 'create'])->name('transfers.create');
     Route::post('/transfers', [TransferController::class, 'store'])->name('transfers.store');
     Route::delete('/transfers/{id}', [TransferController::class, 'destroy'])->name('transfers.destroy');
+
+    // تقرير اليوم
 });
 
 
-
+Route::group(['middleware' => ['auth', 'can:is-admin']], function () {
+    Route::get('/Report/seles/', [Report::class, 'index'])->name('Report.index');
+});
 
 /**************************************************
  ***       ما تبقى من مهام هي كالتالي    ********

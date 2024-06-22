@@ -39,9 +39,12 @@ class CodesController extends Controller
         // استرجاع الفئة المحددة
         $category = Category::findOrFail($categoryId);
 
+        // الاكود الغير مشتراة
+        $codes = Code::where('category_id', $categoryId)->whereDoesntHave('codeRecords')->get();
+
         // استرجاع الأكواد التي تنتمي إلى الفئة المحددة
-        $codes = Code::where('category_id', $categoryId)->get();
-        // dd($codes);
+        // $codes = Code::where('category_id', $categoryId)->get();
+        // whereDoesntHave
 
         return view('codes.details', compact('category', 'codes'));
     }
@@ -69,13 +72,14 @@ class CodesController extends Controller
 
         // احصل على المستخدم الحالي
         $user = User::findOrFail(auth()->user()->id);
+        // احصل على الرصيد والدين الحالي للمستخدم
         $userBalance = $user->Balance;
         $userDebt = $user->Debt;
 
         $totalCreditBalance = $user->balance->sum('credit_balance');
 
         // التحقق من أن رصيد المستخدم كافٍ لشراء الكود  $totalCreditBalance >= $code->category->price
-        if ($user->Balance >= $code->category->price) {
+        if ($user->Balance >= $code->category->price && !$code->isRecorded()) {
 
             try {
                 // إضافة الكود إلى سجل الأكواد
@@ -84,12 +88,14 @@ class CodesController extends Controller
                     'code_id' => $code->id,
                 ]);
 
+                // وضع الكود على اساس انه مشترى 
+                $code->purchased = 1;
+                $code->save();
                 // خصم سعر الكود من رصيد المستخدم
                 $user->balance->credit_balance -= $code->category->price;
                 $user->balance->save();
 
-                // تحديث حالة الشراء في جدول الأكواد
-                $code->update(['purchased' => true]);
+
                 // ================================ ***************************** =============================================
 
                 DB::beginTransaction();

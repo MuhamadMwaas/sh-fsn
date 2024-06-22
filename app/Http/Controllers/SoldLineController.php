@@ -141,7 +141,7 @@ class SoldLineController extends Controller
 
                 // تحديد المسار للحفظ
                 $imagePath = public_path('images');
-                $imagePath = str_replace('public', 'public_html', $imagePath);
+                // $imagePath = str_replace('public', 'public_html', $imagePath);
 
                 // نقل الصور إلى مجلد "images" في مجلد "public"
                 $first_image->move($imagePath, $imageName1);

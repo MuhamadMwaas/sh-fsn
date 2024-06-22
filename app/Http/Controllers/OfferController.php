@@ -59,7 +59,7 @@ class OfferController extends Controller
         if ($request->hasFile('image')) {
             $imageName = Str::random(20) . '.' . $request->image->getClientOriginalExtension();
             $imagePath = public_path('images');
-            $imagePath = str_replace('public', 'public_html', $imagePath);
+            // $imagePath = str_replace('public', 'public_html', $imagePath);
             $request->image->move($imagePath, $imageName);
         }
 

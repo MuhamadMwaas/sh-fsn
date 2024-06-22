@@ -453,6 +453,13 @@
                             </div>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('activations.index') }}">
+                            <div class="ms-auto" style="margin-right: 30px">
+                                <span> تقرير المبيعات </span><i class="bi bi-circle" style="margin-left: 10px"></i>
+                            </div>
+                        </a>
+                    </li>
                 </ul>
             </li><!-- End Charts Nav -->
 
