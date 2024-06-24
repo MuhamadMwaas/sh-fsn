@@ -41,8 +41,8 @@
                                 <li class="text-center align-middle">
                                     <a class="dropdown-item d-flex align-items-center text-center align-middle">
                                         @can('is-Notadmin')
-                                            <span
-                                                class="badge text-bg-success me-5 fs-6 ">{{ Auth::user()->Balance }} ₺</span>
+                                            <span class="badge text-bg-success me-5 fs-6 ">{{ Auth::user()->Balance }}
+                                                ₺</span>
                                             <span class="badge text-bg-danger fs-6 ">{{ Auth::user()->Debt }} ₺</span>
 
                                         @endcan
@@ -454,7 +454,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('activations.index') }}">
+                        <a href="{{ route('admin.Report.index') }}">
                             <div class="ms-auto" style="margin-right: 30px">
                                 <span> تقرير المبيعات </span><i class="bi bi-circle" style="margin-left: 10px"></i>
                             </div>

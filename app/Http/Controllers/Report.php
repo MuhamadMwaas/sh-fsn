@@ -21,7 +21,7 @@ class Report extends Controller
             'startDate' => 'nullable|date',
         ]);
 
-        $startDate = $request->input('startDate') ?? date_format(now()->subDays(1), 'Y-m-d');
+        $startDate = $request->input('startDate') ?? date_format(now()->subDays(30), 'Y-m-d');
         $endDate = $request->input('endDate') ?? date_format(now(), 'Y-m-d');
         $categories = Category::withCount(['codes as sold_codes_count' => function ($query) use ($startDate, $endDate) {
             $query->whereHas('codeRecords', function ($query) use ($startDate, $endDate) {

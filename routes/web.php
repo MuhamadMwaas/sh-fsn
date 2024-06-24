@@ -225,7 +225,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::group(['middleware' => ['auth', 'can:is-admin']], function () {
-    Route::get('/Report/seles/', [Report::class, 'index'])->name('Report.index');
+    Route::get('/Report/seles/', [Report::class, 'index'])->name('admin.Report.index');
 });
 
 /**************************************************
