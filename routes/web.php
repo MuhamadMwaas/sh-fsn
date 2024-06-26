@@ -17,8 +17,11 @@ use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Report;
+use App\Http\Controllers\Setting;
 use App\Http\Controllers\Update;
 use App\Models\Balance;
+use App\Models\Settings;
+use Illuminate\Support\Facades\Gate;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,13 +34,12 @@ use App\Models\Balance;
 |
 */
 
-Route::get('/profiles', function () {
-    return view('profile.profile');
-});
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/test', function () {
+
+    dd(Settings::M_mode());
+})->middleware('MaintenanceMode');
 Route::get('/', [OfferController::class, 'indexdash'])->name('site.index');
 
 Route::get('/Contact', function () {
@@ -48,19 +50,26 @@ Route::get('/payment', function () {
 });
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'MaintenanceMode'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profiles', function () {
+
+        $M_mode_status = Settings::M_mode()->value;
+        $M_mode_message = Settings::M_mode_message()->value;
+        return view('profile.profile', compact('M_mode_status', 'M_mode_message'));
+    })->name('profiles');
+    Route::post('M_mode_Update', [Setting::class, 'Update'])->name('M_mode_Update');
 });
 
 require __DIR__ . '/auth.php';
 // راوت لتحديث كلمة مرور المستخدم
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'MaintenanceMode'])->group(function () {
     Route::get('/balancerInstallOnceForeMy', [Update::class, 'index']);
-    Route::get('/test', [Update::class, 'test']);
+    // Route::get('/test', [Update::class, 'test']);
     Route::get('/CodespurchasedAll', [Update::class, 'purchasedCodes']);
 
     Route::put('/users/{userId}/update-password', [PasswordController::class, 'updatePasswordAdmin'])->name('users.updatePassword');

@@ -453,13 +453,15 @@
                             </div>
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('admin.Report.index') }}">
-                            <div class="ms-auto" style="margin-right: 30px">
-                                <span> تقرير المبيعات </span><i class="bi bi-circle" style="margin-left: 10px"></i>
-                            </div>
-                        </a>
-                    </li>
+                    @can('is-admin')
+                        <li>
+                            <a href="{{ route('admin.Report.index') }}">
+                                <div class="ms-auto" style="margin-right: 30px">
+                                    <span> تقرير المبيعات </span><i class="bi bi-circle" style="margin-left: 10px"></i>
+                                </div>
+                            </a>
+                        </li>
+                    @endcan
                 </ul>
             </li><!-- End Charts Nav -->
 

@@ -44,25 +44,29 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             $data = [];
             // جلب عدد التفعيلات الكلي وتخزينه في المتغير العام
-            $user = Auth::user();
-            if ($user) {
-                $data['totalActivations'] = $user->activationSims()->count();
-                $data['totalInternational'] = $user->internationalSims()->count();
-                //$data['totalline'] = $user->simCards()->count();
-                $data['totalLines'] = $user->simCards()->whereDoesntHave('soldLines')->count();
+            // $user = Auth::user();
+            if (Auth::check()) {
+                $user = User::findOrFail(Auth::user()->id);
+                if ($user) {
+                    $data['totalActivations'] = $user->activationSims()->count();
+                    $data['totalInternational'] = $user->internationalSims()->count();
+                    //$data['totalline'] = $user->simCards()->count();
+                    $data['totalLines'] = $user->simCards()->whereDoesntHave('soldLines')->count();
 
-                $data['totalNotifications'] = $user->unreadNotifications()->count();
-                $data['totalcodes'] = $user->codeRecords()->count();
-                $data['totalUsers'] = User::count();
-                $data['totalCoderecord'] = Coderecord::count();
-                $data['totalCodes'] = Code::count();
-                $data['totalCategory'] = Category::count();
-                $data['AllNotifications'] = Notifications::count();
-                if ($user->role_id == 2) {
-                    $data['creditBalanceUser'] = Balance::where('user_id', $user->id)->pluck('credit_balance')->sum();
+                    $data['totalNotifications'] = $user->unreadNotifications()->count();
+                    $data['totalcodes'] = $user->codeRecords()->count();
+                    $data['totalUsers'] = User::count();
+                    $data['totalCoderecord'] = Coderecord::count();
+                    $data['totalCodes'] = Code::count();
+                    $data['totalCategory'] = Category::count();
+                    $data['AllNotifications'] = Notifications::count();
+                    if ($user->role_id == 2) {
+                        $data['creditBalanceUser'] = Balance::where('user_id', $user->id)->pluck('credit_balance')->sum();
+                    }
                 }
+
+                $view->with($data);
             }
-            $view->with($data);
         });
     }
 
