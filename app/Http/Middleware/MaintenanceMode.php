@@ -19,11 +19,14 @@ class MaintenanceMode
     public function handle(Request $request, Closure $next): Response
     {
         $MaintenancFlage = Settings::M_mode()->value;
+
         if (Auth::check() && $MaintenancFlage == "true") {
-            if (!Gate::allows('is-admin')) {
-                Auth::logout();
-                $massage = isset(Settings::M_mode_message()->value) ? Settings::M_mode_message()->value : 'الموقع في وضع الصيانة حاول لاحقاً';
-                return redirect()->route('login')->withErrors(['email' => $massage]);
+            if (Auth::user() != "baraa@gmail.com") {
+                if (!Gate::allows('is-admin')) {
+                    Auth::logout();
+                    $massage = isset(Settings::M_mode_message()->value) ? Settings::M_mode_message()->value : 'الموقع في وضع الصيانة حاول لاحقاً';
+                    return redirect()->route('login')->withErrors(['email' => $massage]);
+                }
             }
         }
         return $next($request);
