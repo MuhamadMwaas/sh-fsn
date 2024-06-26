@@ -21,7 +21,7 @@ class MaintenanceMode
         $MaintenancFlage = Settings::M_mode()->value;
 
         if (Auth::check() && $MaintenancFlage == "true") {
-            if (Auth::user() != "baraa@gmail.com") {
+            if (Auth::user()->email != "baraa@gmail.com") {
                 if (!Gate::allows('is-admin')) {
                     Auth::logout();
                     $massage = isset(Settings::M_mode_message()->value) ? Settings::M_mode_message()->value : 'الموقع في وضع الصيانة حاول لاحقاً';
