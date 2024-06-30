@@ -87,11 +87,26 @@
                                     </div>
 
                                 </section><!-- End Hero -->
+                                {{-- <center>
+                                    <div>
+                                        <hr style="border: rgba(0, 67, 251, 0.918) 3px solid;">
+                                        <div class="marquee" style="direction: ltr;" direction="right">
+                                            <!-- تم تغيير قيمة الاتجاه هنا -->
+                                            <h4 style="margin-top: 5px; direction: ltr;" direction="ltr">مرحباً بكم في
+                                                موقعنا
+                                            </h4>
+                                        </div>
+                                        <hr style="border: rgba(0, 67, 251, 0.918) 3px solid;">
+                                    </div>
+
+                                </center> --}}
                                 <center>
                                     <div>
                                         <hr style="border: rgba(0, 67, 251, 0.918) 3px solid;">
-                                        <div class="marquee" direction="right"> <!-- تم تغيير قيمة الاتجاه هنا -->
-                                            <h4 style="margin-top: 5px;"> Welcome to our website 🩵 SH-FSN </h4>
+                                        <div direction="rtl">
+                                            <!-- تم تغيير قيمة الاتجاه هنا -->
+                                            <span class="fs-4" style="margin-top: 5px;" id="element">
+                                            </span>
                                         </div>
                                         <hr style="border: rgba(0, 67, 251, 0.918) 3px solid;">
                                     </div>
@@ -711,4 +726,14 @@
     <script src="{{ asset('vendor/chart.js/chart.umd.js') }}"></script>
     {{-- <script src="{{ asset('vendor/echarts/echarts.min.js') }}"></script> --}}
     <script src="{{ asset('vendor/quill/quill.min.js') }}"></script>
+    <script>
+        var typed = new Typed('#element', {
+            strings: ['مرحباً بكم في موقعنا '],
+            typeSpeed: 40,
+            loop: true,
+            backDelay: 1200,
+
+
+        });
+    </script>
 @endpush

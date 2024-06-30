@@ -28,11 +28,12 @@ trait Charge
         //     }
         // }
         if (is_null($Balance)) {
-            $Balance = $user->Balance;
+            $Balance = $user->Balance ?? 0;
         }
         if (is_null($Debt)) {
-            $Debt = $user->Debt;
+            $Debt = $user->Debt ?? 0;
         }
+
         $data = $this->resolve($amount, $type, $Balance, $Debt);
         $user->Balance = $data['BalanceOut'];
         $user->Debt = $data['DebtOut'];

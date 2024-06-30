@@ -31,6 +31,7 @@
     <link href="{{ asset('vendor/quill/quill.bubble.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/remixicon/remixicon.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/simple-datatables/style.css') }}" rel="stylesheet">
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
     <!-- Template Main CSS File -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -41,7 +42,7 @@
             text-decoration: none;
         }
     </style>
-
+  
     <!-- Vendor CSS Files -->
     <!-- Template Main CSS File -->
     <!-- =======================================================
@@ -95,7 +96,6 @@
     <script src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
     <script src="{{ asset('vendor/simple-datatables/simple-datatables.js') }}"></script>
     <script src="{{ asset('vendor/tinymce/tinymce.min.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     {{-- <script src="{{ asset('js/darkmode.js') }}"></script> --}}
     {{-- <script src="{{ asset('js/darkmode-config.js') }}"></script> --}}
 

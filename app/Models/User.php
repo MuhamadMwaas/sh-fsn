@@ -21,8 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'Balance',
+        'Debt'
     ];
-
+    protected $attributes = [
+    ];
     protected $guarded = [];
 
 

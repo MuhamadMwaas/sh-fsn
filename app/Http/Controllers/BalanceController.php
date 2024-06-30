@@ -165,9 +165,12 @@ class BalanceController extends Controller
         $user = User::findOrFail($request->user_id);
 
         // الحصول على الدين والرصيد الحالي للمستخدم
-        $userBalance = $user->Balance;
-        $userDebt = $user->Debt;
 
+        $userBalance = $user->Balance ?? 0;
+
+        $userDebt = $user->Debt ?? 0;
+
+        // dd($userBalance, $userDebt);
 
         // Update the balance based on the selected balance type
         if ($request->input('balance_type') === 'credit_balance') {
@@ -194,7 +197,7 @@ class BalanceController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
         }
-        
+
         // Calculate total balance
         $totalBalance = $balance->credit_balance - $balance->debit_balance;
 

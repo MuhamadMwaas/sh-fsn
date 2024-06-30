@@ -22,10 +22,10 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         if (Gate::allows('is-admin')) {
-        return view('auth.register');
-    } else {
-        return abort(403, 'Unauthorized action.');
-    }
+            return view('auth.register');
+        } else {
+            return abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -33,23 +33,25 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-   public function store(Request $request): RedirectResponse
-{
-    $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-        'password' => ['required', 'confirmed', Rules\Password::defaults()],
-    ]);
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
 
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-    ]);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'Balance' => 0,
+            'Debt' => 0
+        ]);
 
-    event(new Registered($user));
+        event(new Registered($user));
 
 
-    return redirect()->route('users.index')->with('success', 'تم إنشاء حساب مندوب بنجاح!');
-}
+        return redirect()->route('users.index')->with('success', 'تم إنشاء حساب مندوب بنجاح!');
+    }
 }
