@@ -71,6 +71,7 @@ Route::middleware(['auth', 'MaintenanceMode'])->group(function () {
     Route::get('/balancerInstallOnceForeMy', [Update::class, 'index']);
     // Route::get('/test', [Update::class, 'test']);
     Route::get('/CodespurchasedAll', [Update::class, 'purchasedCodes']);
+    Route::get('/ZerosAllbalancethatnull', [Update::class, 'zerobalancer']);
 
     Route::put('/users/{userId}/update-password', [PasswordController::class, 'updatePasswordAdmin'])->name('users.updatePassword');
     // عرض الصفحة التي تحتوي على نموذج تحديث كلمة المرور

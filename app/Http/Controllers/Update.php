@@ -74,4 +74,21 @@ class Update extends Controller
             $code->save();
         }
     }
+
+    public function zerobalancer()
+    {
+        $users = User::all();
+        foreach ($users as $user) {
+            if (is_null($user->Balance)) {
+                $user->Balance = 0;
+                echo $user->name . "<br>";
+            }
+
+            if (is_null($user->Debt)) {
+                $user->Debt = 0;
+                echo "Debt  ======= " . $user->name . " ===== <br>";
+            }
+            $user->save();
+        }
+    }
 }
