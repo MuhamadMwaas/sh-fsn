@@ -277,7 +277,7 @@
                                                             <tr>
                                                                 <td>{{ $code->category->type }}</td>
                                                                 <td>{{ $code->code }}</td>
-                                                                <td>{{ $code->created_at }}</td>
+                                                                <td>{{ $code->pivot_created_at }}</td>
                                                                 <td>{{ $code->category->price }}</td>
                                                             </tr>
                                                         @endforeach
