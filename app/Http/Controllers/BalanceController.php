@@ -69,6 +69,7 @@ class BalanceController extends Controller
             ];
             // dd($user->purchasedCodes);
             $codes = $user->purchasedCodes()->paginate(30);
+ 
             // جمع الرصيد الإجمالي (متغير جديد)
             $totalBalance = $creditBalance - $debitBalance;
             return view('balances.show', [

@@ -106,7 +106,6 @@ class User extends Authenticatable
     // جلب الخطوط المشتراة الخاصة بالمستخدم 
     public function purchasedCodes()
     {
-        return $this->belongsToMany(Code::class, 'coderecords', 'user_id', 'code_id')
-            ->withTimestamps();
+        return $this->belongsToMany(Code::class, 'coderecords', 'user_id', 'code_id')->withPivot('created_at')-> withPivot('created_at');
     }
 }
