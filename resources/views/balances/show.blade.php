@@ -172,64 +172,7 @@
 
                 </div>
             </section>
-            {{-- <div class="col-12">
-                <div class="card recent-sales overflow-auto ">
 
-                    <div class="card-body">
-                        <h5 class="card-title"><span> الرصيد | تفاصيل</span></h5>
-                        <div class="table-responsive">
-                            <table class="table table-borderless datatable text-light">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">
-                                            <center>تاريخ العملية </center>
-                                        </th>
-                                        <th scope="col">
-                                            <center>رصيد الدين </center>
-                                        </th>
-                                        <th scope="col">
-                                            <center>ايفاء الدين </center>
-                                        </th>
-                                        <th scope="col">
-                                            <center>الرصيد الفعال </center>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($transactions as $transaction)
-                                        <tr>
-                                            <td>
-                                                <center>{{ $transaction->created_at->format('Y-m-d H:i:s') }}</center>
-                                            </td>
-                                            <td>
-                                                <center>
-                                                    @if ($transaction->debit_balance > 0)
-                                                        --
-                                                    @else
-                                                        {{ $transaction->debit_balance }}
-                                                    @endif
-                                                </center>
-                                            </td>
-                                            <td>
-                                                <center>
-                                                    @if ($transaction->debit_balance > 0)
-                                                        {{ $transaction->debit_balance }}
-                                                    @else
-                                                        {{ $transaction->debit_repayment }}--
-                                                    @endif
-                                                </center>
-                                            </td>
-                                            <td>
-                                                <center>{{ $transaction->credit_balance }}</center>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
 
             <div class="col-12">
                 <div class="card recent-sales overflow-auto ">
@@ -296,6 +239,159 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            {{-- السج --}}
+            <div class="accordion" id="accordionExample">
+                {{-- سجل التحويلات المالية --}}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            سجل مشتريات الاكواد
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        {{-- <div class="card-header">
+                                        <h5 class="card-title">سجل التحويلات المالية </h5>
+                                    </div> --}}
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-nowrap mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>الفئة</th>
+                                                            <th>المفتاح</th>
+                                                            <th>تاريخ الشراء</th>
+                                                            <th>السعر</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($codes as $code)
+                                                            <tr>
+                                                                <td>{{ $code->category->type }}</td>
+                                                                <td>{{ $code->code }}</td>
+                                                                <td>{{ $code->created_at }}</td>
+                                                                <td>{{ $code->category->price }}</td>
+                                                            </tr>
+                                                        @endforeach
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                        <div class="d-flex">
+                                            {!! $codes->links() !!}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- سجل طلبات الشحن --}}
+                {{-- <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            سجل طلبات الشحن
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">سجل التحويلات المالية </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-nowrap mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>التطبيق</th>
+                                                            <th>اسم عنصر الشحن</th>
+                                                            <th>كمية عنصر الشحن</th>
+                                                            <th>السعر الافرادي</th>
+                                                            <th>ايدي الحساب</th>
+                                                            <th>العدد</th>
+                                                            <th>الحالة</th>
+                                                            <th>المجيب</th>
+                                                            <th>تاريخ الانشاء</th>
+                                                            <th>تاريخ الاستجابة</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div> --}}
+
+                {{-- سجل المفاتحح المشتراة --}}
+                {{-- <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            المفاتيح المشتراة
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">سجل التحويلات المالية </h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-nowrap mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>التطبيق</th>
+                                                            <th>المفتاح</th>
+                                                            <th>تاريخ الشراء</th>
+                                                            <th>السعر</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div> --}}
             </div>
 
         </div>

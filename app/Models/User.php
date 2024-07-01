@@ -24,8 +24,7 @@ class User extends Authenticatable
         'Balance',
         'Debt'
     ];
-    protected $attributes = [
-    ];
+    protected $attributes = [];
     protected $guarded = [];
 
 
@@ -102,5 +101,12 @@ class User extends Authenticatable
     public function transfer_History()
     {
         return $this->hasMany(Transfers_History::class, 'user_id')->orderBy('created_at', 'desc');
+    }
+
+    // جلب الخطوط المشتراة الخاصة بالمستخدم 
+    public function purchasedCodes()
+    {
+        return $this->belongsToMany(Code::class, 'coderecords', 'user_id', 'code_id')
+            ->withTimestamps();
     }
 }
